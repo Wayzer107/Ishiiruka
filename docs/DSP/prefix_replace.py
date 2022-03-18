@@ -5,10 +5,7 @@ import os
 import sys
 
 def GetPrefixLine(l, a):
-  for s in a:
-    if s[0:len(l)] == l:
-      return s
-  return ""
+  return next((s for s in a if s[:len(l)] == l), "")
   
 def GetComment(l):
   comment_start = l.find("//")
@@ -16,10 +13,10 @@ def GetComment(l):
     comment_start = l.find("->")
   if comment_start < 0:
     return ""
-  
-  while (l[comment_start-1] == ' ') or (l[comment_start-1] == '\t'):
+
+  while l[comment_start - 1] in [' ', '\t']:
     comment_start -= 1
-    
+
   return l[comment_start:]
 
 
