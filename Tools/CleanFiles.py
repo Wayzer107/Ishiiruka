@@ -30,11 +30,7 @@ standard_comments = {
 }
 
 def normalize_comment(line):
-    line = line.strip().lstrip('#').lstrip()
-    if line:
-        return "# %s" % (line,)
-    else:
-        return ""
+    return f"# {line}" if (line := line.strip().lstrip('#').lstrip()) else ""
 
 def normalize_ini_file(in_, out):
     sections = {}
@@ -99,7 +95,7 @@ def main():
     pattern = os.path.join(base_path, "../Data/User/GameConfig/??????.ini")
     for name in glob.glob(pattern):
         in__name = name
-        out_name = name + '.new'
+        out_name = f'{name}.new'
         in_ = codecs.open(in__name, 'r', 'utf8')
         out = codecs.open(out_name, 'w', 'utf8')
         normalize_ini_file(in_, out)

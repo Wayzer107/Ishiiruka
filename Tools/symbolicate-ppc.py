@@ -60,8 +60,7 @@ def read_map(filename):
     res = []
     with open(filename, "r") as f:
         for line in f:
-            match = reg.match(line)
-            if match:
+            if match := reg.match(line):
                 start = int(match.group(1), 16)
                 size  = int(match.group(2), 16)
                 name  = match.group(5)
@@ -74,7 +73,7 @@ map = read_map(sys.argv[1])
 def lookup(address):
     i = 0
     j = len(map)
-    while(True):
+    while True:
         if (j < i):
             return "JIT_PPC_[unknown]"
         k = round((j + i) // 2)
@@ -83,7 +82,7 @@ def lookup(address):
         elif (address >= map[k].end):
             i = k + 1
         else:
-            return "JIT_PPC_" + map[k].name
+            return f"JIT_PPC_{map[k].name}"
 
 # Function used to replace given match:
 def replace(match):
